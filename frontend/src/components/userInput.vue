@@ -5,6 +5,7 @@ export default {
         genre: '',
         location: '',
         language: '',
+        errorMessage: '', // Add errorMessage property
         genreRules: [
             v => !!v || 'Genre is required',
         ],
@@ -18,6 +19,7 @@ export default {
     methods: {
         async submit() {
             if (this.valid) {
+                this.$emit('status-change', 'loading');
                 const data = {
                     genre: this.genre,
                     location: this.location,
@@ -39,8 +41,12 @@ export default {
 
                     const result = await response.json();
                     console.log('Success:', result);
+                    this.$emit('data-loaded', result);
+                    this.$emit('status-change', 'finished');
                 } catch (error) {
                     console.error('Error:', error);
+                    this.errorMessage = 'Failed to generate ad. Please try again.';
+                    this.$emit('status-change', 'form');
                 }
             }
         },
@@ -53,20 +59,23 @@ export default {
         <v-container>
             <v-col>
                 <v-row cols="12" md="4">
-                    <v-text-field v-model="genre" :rules=genreRules :counter="10" label="genre" required></v-text-field>
+                    <v-text-field v-model="genre" :rules="genreRules" :counter="10" label="genre" required></v-text-field>
                 </v-row>
 
                 <v-row cols="12" md="4">
-                    <v-text-field v-model="location" :rules=locationRules :counter="10" label="location" required></v-text-field>
+                    <v-text-field v-model="location" :rules="locationRules" :counter="10" label="location" required></v-text-field>
                 </v-row>
 
                 <v-row cols="12" md="4">
-                    <v-text-field v-model="language" :rules=languageRules label="language" required></v-text-field>
+                    <v-text-field v-model="language" :rules="languageRules" label="language" required></v-text-field>
                 </v-row>
                 <v-row cols="12" md="4">
                     <v-btn :disabled="!valid" color="primary" @click="submit">
                         Submit
                     </v-btn>
+                </v-row>
+                <v-row cols="12" md="4" v-if="errorMessage">
+                    <v-alert type="error">{{ errorMessage }}</v-alert> <!-- Display error message -->
                 </v-row>
             </v-col>
         </v-container>
