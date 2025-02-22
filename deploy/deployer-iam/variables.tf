@@ -15,6 +15,6 @@ variable "allowed_principals" {
   type        = list(string)
   default     = [
     # rashmi-carol-dsouza
-    "arn:aws:iam::477896369815:root"
+    "arn:aws:iam::477896369815:user/chatapi"
   ]
 }
