@@ -1,0 +1,11 @@
+# Generated
+dist/
+
+# Observability
+logs/
+prof/
+
+# Cache files
+__pycache__/
+.mypy_cache/
+.pytest_cache/
