@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import userInput from './components/userInput.vue'
+  import player from './components/player.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@
   </header>
   <main class="main">
     <userInput />
+    <player />
   </main>
 </template>
 
@@ -25,7 +27,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   width: 100%;
 }
 </style>
