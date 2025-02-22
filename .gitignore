@@ -1,3 +1,6 @@
 # Generated
 dist
 __pycache__
+.env
+data/
+poetry.lock
