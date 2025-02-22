@@ -9,12 +9,14 @@ help:
 	@echo "Choose a command:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+
 setup: ## Setup the project
-  sam --version || exit 1
+	sam --version || exit 1
 	$(POETRY) shell
 	pip install pre-commit
 	poetry install
 	@make pre-commit-install
+
 
 install: ## Install dependencies
 	$(POETRY) install
