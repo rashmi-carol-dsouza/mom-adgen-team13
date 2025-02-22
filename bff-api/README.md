@@ -1,13 +1,20 @@
 # Backend for Frontend API
 
+## Pre-requisites
 
-## Frontend API
+1. To test the lambda function locally you will need to install the [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+
+## Getting Started
+
+## Request - Response Structure
+
+### Frontend API
 
 ```sh
 curl GET /generated-ads?lat={lat}&lon={lon}&genre={genre} # => MP3
 ```
 
-## Ad Generator API
+### Ad Generator API
 
 ```sh
 curl POST /ads

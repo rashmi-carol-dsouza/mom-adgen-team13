@@ -5,6 +5,7 @@ PYTHON := python3
 DIR := bff_api
 
 setup:
+	sam --version || exit 1
 	$(POETRY) shell
 	pip install pre-commit
 	poetry install
