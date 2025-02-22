@@ -1,6 +1,6 @@
 # Connection Test
 
-This script is used to test the connection with an instance of the [koyeb db](https://www.koyeb.com/docs/databases) called `mom-2025-team13-db`.
+This script is used to initialise the database instance of [koyeb db](https://www.koyeb.com/docs/databases) called `mom-2025-team13-db`.
 
 ## Pre-requisites
 
