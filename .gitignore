@@ -4,6 +4,7 @@ data/
 
 # Observability
 logs/
+logs/*
 prof/
 
 # Cache files
