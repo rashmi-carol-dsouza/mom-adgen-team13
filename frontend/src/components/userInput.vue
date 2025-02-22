@@ -1,57 +1,57 @@
-<script>
-export default {
-    data: () => ({
-        valid: false,
-        genre: '',
-        location: '',
-        language: '',
-        errorMessage: '', // Add errorMessage property
-        genreRules: [
-            v => !!v || 'Genre is required',
-        ],
-        locationRules: [
-            v => !!v || 'Location is required',
-        ],
-        languageRules: [
-            v => !!v || 'Language is required',
-        ],
-    }),
-    methods: {
-        async submit() {
-            if (this.valid) {
-                this.$emit('status-change', 'loading');
-                const data = {
-                    genre: this.genre,
-                    location: this.location,
-                    language: this.language,
-                };
+<script setup>
+import { ref } from 'vue';
 
-                try {
-                    const response = await fetch('http://localhost:8080/generateAd', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data),
-                    });
+const valid = ref(false);
+const genre = ref('');
+const location = ref('');
+const language = ref('');
+const errorMessage = ref('');
 
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+const genreRules = [
+    v => !!v || 'Genre is required',
+];
+const locationRules = [
+    v => !!v || 'Location is required',
+];
+const languageRules = [
+    v => !!v || 'Language is required',
+];
 
-                    const result = await response.json();
-                    console.log('Success:', result);
-                    this.$emit('data-loaded', result);
-                    this.$emit('status-change', 'finished');
-                } catch (error) {
-                    console.error('Error:', error);
-                    this.errorMessage = 'Failed to generate ad. Please try again.';
-                    this.$emit('status-change', 'form');
-                }
+const submit = async () => {
+    if (valid.value) {
+        emit('status-change', 'loading');
+        const data = {
+            genre: genre.value,
+            location: location.value,
+            language: language.value,
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/generateAd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'audio/mpeg',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        },
-    },
-}
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            console.log('Success:', url);
+            emit('data-loaded', url);
+            emit('status-change', 'finished');
+        } catch (error) {
+            console.error('Error:', error);
+            errorMessage.value = 'Failed to generate ad. Please try again.';
+            emit('status-change', 'form');
+        }
+    }
+};
 </script>
 
 <template>

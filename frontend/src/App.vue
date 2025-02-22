@@ -4,14 +4,14 @@ import userInput from './components/userInput.vue';
 import player from './components/player.vue';
 
 const status = ref('form');
-let adFromAPI = ref(null);
+let adFromAPI = ref();
 
 const handleStatusChange = (newStatus: string) => {
   status.value = newStatus;
 };
 
-const handleDataLoaded = (data) => {
-  adFromAPI.value = data;
+const handleDataLoaded = (fileUrl: URL) => {
+  adFromAPI.value = fileUrl;
   status.value = 'finished';
 };
 </script>
