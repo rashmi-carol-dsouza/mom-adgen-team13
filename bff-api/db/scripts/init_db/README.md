@@ -13,7 +13,7 @@ DATABASE_HOST=ep-aged-forest-a2sd5mrk.eu-central-1.pg.koyeb.app
 DATABASE_USER=koyeb-adm
 DATABASE_PASSWORD=ASK_LARRY_IN_CHAT
 DATABASE_NAME=koyebdb
-SAMPLE_DATA_PATH = "db/scripts/connection_test/sample-data.csv"
+DATA_PATH = "db/scripts/init-db/dist/your_data_file.csv"
 MIGRATIONS_PATH = "db/migrations/V1__create_initial_schema.sql"
 FLAG_INIT_DB=DISABLED
 ```
