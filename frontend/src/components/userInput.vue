@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 
+const emit = defineEmits(['status-change', 'data-loaded']);
+
 const valid = ref(false);
 const genre = ref('');
 const location = ref('');
