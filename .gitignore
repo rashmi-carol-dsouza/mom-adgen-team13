@@ -1,1 +1,18 @@
+# Generated
+dist/
+data/
 
+# Observability
+logs/
+prof/
+
+# Cache files
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+
+# OS, Editor
+*.todo
+
+# Secret
+.env
