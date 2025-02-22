@@ -6,7 +6,7 @@
   <header>
     <h1>MoM Team 13</h1>
   </header>
-  <main>
+  <main class="main">
     <userInput />
   </main>
 </template>
@@ -18,5 +18,14 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
 }
 </style>
