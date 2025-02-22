@@ -22,10 +22,13 @@ lint:
 start:
 	$(POETRY) run python ${DIR}/main.py
 
+init-db:
+	$(POETRY) run python db/scripts/init_db/main.py
+
 pre-commit-install:
 	$(PRE_COMMIT) install
 
 pre-commit-run:
 	$(PRE_COMMIT) run --all-files
 
-.PHONY: install test lint start pre-commit-install pre-commit-run
+.PHONY: install test lint start pre-commit-install pre-commit-run init-db
