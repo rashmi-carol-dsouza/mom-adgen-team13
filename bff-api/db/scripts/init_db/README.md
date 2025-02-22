@@ -20,4 +20,4 @@ FLAG_INIT_DB=DISABLED
 
 ## Running
 
-Navigate to the `bff-api` directory, execute `make test-connection`.
+Navigate to the `bff-api` directory, execute `make init-db`.
