@@ -24,8 +24,8 @@ def attempt_db_initialization(conn, migrations_path):
         cur.execute(sql_script)
 
 
-def insert_raw_data(conn, sample_data_path):
-    csv_data = read_raw_data(sample_data_path)
+def insert_raw_data(conn, init_data_path):
+    csv_data = read_raw_data(init_data_path)
     insert_data(conn, csv_data, logger)
     logger.info("Data inserted successfully!")
 
@@ -38,10 +38,10 @@ def main():
     db_password = os.getenv("DATABASE_PASSWORD")
     db_host = os.getenv("DATABASE_HOST", "localhost")
     migrations_path = os.getenv("MIGRATIONS_PATH")
-    sample_data_path = os.getenv("SAMPLE_DATA_PATH")
+    init_data_path = os.getenv("INIT_DATA_PATH")
     flag_init_db = os.getenv("FLAG_INIT_DB")
 
-    if not all([db_name, db_user, db_password, migrations_path, sample_data_path]):
+    if not all([db_name, db_user, db_password, migrations_path, init_data_path]):
         logger.error("Database credentials are not fully provided in the .env file")
         return
 
@@ -51,7 +51,7 @@ def main():
         with psycopg.connect(dsn) as conn:
             if flag_init_db == "ENABLED":
                 attempt_db_initialization(conn, migrations_path)
-            insert_raw_data(conn, sample_data_path)
+            insert_raw_data(conn, init_data_path)
     except psycopg.Error:
         logger.exception("Error inserting data")
 
