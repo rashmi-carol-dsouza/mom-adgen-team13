@@ -12,3 +12,6 @@ __pycache__/
 
 # OS, Editor
 *.todo
+
+# Secret
+.env

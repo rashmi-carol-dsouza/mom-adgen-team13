@@ -22,6 +22,9 @@ lint:
 start:
 	$(POETRY) run python ${DIR}/main.py
 
+test-connection:
+	$(POETRY) run python db/scripts/connection_test/main.py
+
 pre-commit-install:
 	$(PRE_COMMIT) install
 
