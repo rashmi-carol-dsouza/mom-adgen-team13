@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "chat-api"
+version = "0.1.0"
+description = ""
+authors = ["rashmi-carol-dsouza <hello@rashmidsouza.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+lmnt = "^1.1.7"
+uvicorn = "^0.34.0"
+loguru = "^0.7.3"
+python-dotenv = "^1.0.1"
+langchain = "^0.3.19"
+mistralai = "^1.5.0"
+langchain-community = "^0.3.18"
+langchain-mistralai = "^0.2.7"
+fastapi = "^0.115.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
