@@ -31,4 +31,4 @@ pre-commit-install:
 pre-commit-run:
 	$(PRE_COMMIT) run --all-files
 
-.PHONY: install test lint start pre-commit-install pre-commit-run
+.PHONY: install test lint start pre-commit-install pre-commit-run init-db

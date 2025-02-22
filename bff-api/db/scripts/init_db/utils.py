@@ -8,24 +8,20 @@ def read_raw_data(file_path):
     return csv_data
 
 
-def with_test_prefix(data_id):
-    return f"TEST_DATA_{data_id}"
-
-
 def insert_data(connection, csv_text, logger):
     logger.info("Starting data insertion")
     with connection.cursor() as cur:
         reader = csv.DictReader(csv_text.splitlines())
         for row in reader:
             # Extract and clean fields from CSV
-            performance_id = with_test_prefix(row["performance_id"].strip())
-            artist_id = with_test_prefix(row["artist_id"].strip())
+            performance_id = row["performance_id"].strip()
+            artist_id = row["artist_id"].strip()
             artist_name = row["Artist Name"].strip()
-            event_id = with_test_prefix(row["Event ID on Songkick "].strip())
+            event_id = row["Event ID on Songkick "].strip()
             event_start_date = row["Event Start Date"].strip()
             event_type = row["Event Type"].strip()
-            venue_id = with_test_prefix(row["Venue ID on Songkick"].strip())
-            venue_name = with_test_prefix(row["Venue Name"].strip())
+            venue_id = row["Venue ID on Songkick"].strip()
+            venue_name = row["Venue Name"].strip()
             venue_address = row["Venue address "].strip()
             venue_zip = row["Venue ZIP Code"].strip()
             venue_lat = float(row["Venue Latitude"].strip())
