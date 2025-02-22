@@ -15,12 +15,4 @@ source_profile = default
 region = eu-central-1
 ```
 
-4. This will return temporary credentials (Access Key, Secret Key, and Session Token) which can be set as environment variables before running Terraform:
-
-```sh
-export AWS_ACCESS_KEY_ID=<temporary-access-key>
-export AWS_SECRET_ACCESS_KEY=<temporary-secret-key>
-export AWS_SESSION_TOKEN=<temporary-session-token>
-```
-
 5. Run `terraform plan` to see the plan and to deploy `terraform apply`
