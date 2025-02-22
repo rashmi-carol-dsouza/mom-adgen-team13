@@ -2,14 +2,14 @@
 CREATE EXTENSION IF NOT EXISTS postgis;
 
 -- Artists table: storing artist info and language (for your query filter)
-CREATE TABLE artists (
+CREATE TABLE IF NOT EXISTS artists (
     id BIGINT PRIMARY KEY,
     name TEXT NOT NULL,
     language TEXT  -- optional: store the artist's language if available
 );
 
 -- Venues table: storing venue details with a geospatial location column
-CREATE TABLE venues (
+CREATE TABLE IF NOT EXISTS venues (
     id BIGINT PRIMARY KEY,
     name TEXT NOT NULL,
     address TEXT,
@@ -20,10 +20,10 @@ CREATE TABLE venues (
 );
 
 -- Create a spatial index on the venues location for fast geospatial queries
-CREATE INDEX idx_venues_location ON venues USING GIST(location);
+CREATE INDEX IF NOT EXISTS idx_venues_location ON venues USING GIST(location);
 
 -- Events table: storing event details and linking to a venue
-CREATE TABLE events (
+CREATE TABLE IF NOT EXISTS events (
     id BIGINT PRIMARY KEY,  -- e.g., Event ID on Songkick
     start_date DATE NOT NULL,
     event_type TEXT,
@@ -35,24 +35,24 @@ CREATE TABLE events (
 );
 
 -- Performances table: linking an artist with an event (for events with multiple artists)
-CREATE TABLE performances (
+CREATE TABLE IF NOT EXISTS performances (
     id BIGINT PRIMARY KEY,  -- performance_id from your CSV
     event_id BIGINT REFERENCES events(id),
     artist_id BIGINT REFERENCES artists(id)
 );
 
 -- Genres table: storing distinct genre names
-CREATE TABLE genres (
+CREATE TABLE IF NOT EXISTS genres (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL
 );
 
 -- Join table to allow a performance to have multiple genres
-CREATE TABLE performance_genres (
+CREATE TABLE IF NOT EXISTS performance_genres (
     performance_id BIGINT REFERENCES performances(id),
     genre_id INT REFERENCES genres(id),
     PRIMARY KEY (performance_id, genre_id)
 );
 
 -- Optional: index on language in the artists table for faster filtering
-CREATE INDEX idx_artists_language ON artists(language);
+CREATE INDEX IF NOT EXISTS idx_artists_language ON artists(language);
