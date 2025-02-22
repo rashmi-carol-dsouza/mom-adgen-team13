@@ -1,6 +1,9 @@
 # Generated
 dist/
 data/
+.aws-sam/
+.terraform/
+.terraform.lock.hcl
 
 # Observability
 logs/
@@ -13,6 +16,9 @@ __pycache__/
 
 # OS, Editor
 *.todo
+.vscode/
+.idea/
+*.DS_Store
 
 # Secret
 .env
