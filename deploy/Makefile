@@ -16,4 +16,4 @@ deployer-iam-plan: ## Plan terraform
 deployer-iam-apply: ## Apply terraform
 	cd ./deployer-iam && $(TERRAFORM) apply
 
-.PHONY: help tf-init tf-plan tf-apply
+.PHONY: help deployer-iam-init deployer-iam-plan deployer-iam-apply

@@ -4,6 +4,7 @@ data/
 .aws-sam/
 .terraform/
 .terraform.lock.hcl
+terraform.tfstate
 
 # Observability
 logs/
