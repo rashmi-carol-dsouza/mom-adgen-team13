@@ -31,6 +31,9 @@ lint: ## Run linter
 start: ## Start the server
 	$(POETRY) run python ${DIR}/main.py
 
+run: ## Run server in production
+	FLASK_APP='bff_api/main' $(POETRY) run flask run --host=0.0.0.0 --port=5000 --no-debugger --no-reload
+
 init-db: ## Initialize the database
 	$(POETRY) run python db/scripts/init_db/init.py
 
