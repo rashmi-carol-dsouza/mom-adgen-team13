@@ -31,6 +31,9 @@ lint: ## Run linter
 start: ## Start the server
 	$(POETRY) run uvicorn bff_api.main:app --reload --port 5000
 
+run: ## Run the server on production
+	$(POETRY) run uvicorn bff_api.main:app --port 5000
+
 init-db: ## Initialize the database
 	$(POETRY) run python db/scripts/init_db/init.py
 
@@ -54,4 +57,4 @@ deploy-destroy: ## Destory terraform infrastructure
 
 .PHONY: help deploy-init deploy-plan deploy-apply
 
-.PHONY: help install test lint start pre-commit-install pre-commit-run init-db
+.PHONY: help install test lint start pre-commit-install pre-commit-run init-db run
