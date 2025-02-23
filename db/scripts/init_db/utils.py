@@ -134,5 +134,5 @@ def insert_data(connection, csv_text, logger):
                         )
                     else:
                         logger.error(f"Failed to retrieve genre id for {genre}")
-        connection.commit()
+            connection.commit()
         logger.info("Data insertion complete")

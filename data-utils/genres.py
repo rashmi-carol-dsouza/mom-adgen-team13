@@ -4,6 +4,8 @@ import pandas as pd
 file_path = "../Songkick_upcoming_events_2025_dataMOM070225.csv"
 data = pd.read_csv(file_path)
 
+print(data["performance_id"].count())
+
 # Drop rows where 'Genres' is missing
 genres_series = data["Genres"].dropna()
 

@@ -13,6 +13,15 @@ psycopg = {extras = ["c"], version = "^3.2.5"}
 loguru = "^0.7.3"
 flask-cors = "^5.0.0"
 requests = "^2.32.3"
+lmnt = "^1.1.7"
+langchain = "^0.3.19"
+mistralai = "^1.5.0"
+langchain-community = "^0.3.18"
+langchain-mistralai = "^0.2.7"
+pydub = "^0.25.1"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+jsonify = "^0.5"
 
 
 [build-system]
