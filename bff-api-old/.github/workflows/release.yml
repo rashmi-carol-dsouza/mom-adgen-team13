@@ -1,0 +1,19 @@
+name: Publishing
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+        # SOMEDAY: Find out why this doesn't create releases or tags, where do the notes go?
+      - name: Release Drafter
+        uses: release-drafter/release-drafter@v6.0.0

@@ -29,10 +29,10 @@ lint: ## Run linter
 	$(POETRY) run pylint ${DIR}/ --rcfile=.pylintrc
 
 start: ## Start the server
-	$(POETRY) run python ${DIR}/main.py
+	$(POETRY) run python ${DIR}/app.py
 
 init-db: ## Initialize the database
-	$(POETRY) run python db/scripts/init_db/init.py
+	$(POETRY) run python db/scripts/init_db/app.py
 
 pre-commit-install: ## Install pre-commit hooks
 	$(PRE_COMMIT) install
