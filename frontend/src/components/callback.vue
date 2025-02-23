@@ -29,9 +29,10 @@ onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   if (code) {
-    getToken(code);
+    getToken(code).then(() => {
+      window.location.href = '/user';
+    });
   }
-  window.location.href = '/';
 });
 </script>
 

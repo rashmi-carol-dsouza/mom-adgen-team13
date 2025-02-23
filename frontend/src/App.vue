@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const clientId = '8debbbb07e454253bc3da61a7411a163';
 const redirectUri = 'https://team13.surge.sh/callback';
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email user-read-playback-state user-read-currently-playing';
 let authUrl: string = '';
 
 const generateRandomString = (length: number): string => {
