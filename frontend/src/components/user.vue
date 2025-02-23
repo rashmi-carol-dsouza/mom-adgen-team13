@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+const emit = defineEmits(['status-change', 'data-loaded']);
+
 const isLoggedIn = (): boolean => {
   return !!localStorage.getItem('access_token');
 }
@@ -39,6 +41,79 @@ const fetchCurrentlyPlaying = async () => {
   }
 }
 
+const errorMessage = ref('');
+
+const getLocation = (): Promise<{ lon: number, lat: number }> => {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          resolve({
+            lon: position.coords.longitude,
+            lat: position.coords.latitude
+          });
+        },
+        error => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              reject(new Error('User denied the request for Geolocation.'));
+              break;
+            case error.POSITION_UNAVAILABLE:
+              reject(new Error('Location information is unavailable.'));
+              break;
+            case error.TIMEOUT:
+              reject(new Error('The request to get user location timed out.'));
+              break;
+            default:
+              reject(new Error('An unknown error occurred.'));
+              break;
+          }
+        }
+      );
+    } else {
+      reject(new Error('Geolocation is not supported by this browser.'));
+    }
+  });
+};
+
+const submit = async () => {
+  emit('status-change', 'loading');
+  try {
+    const location = await getLocation();
+    console.log('Location:', location);
+    const data = {
+      genre: ['rock'], // Example genre, you can modify this as needed
+      lon: location.lon.toString(),
+      lat: location.lat.toString(),
+      language: 'English', // Example language, you can modify this as needed
+    };
+
+    const response = await fetch('https://4argznoorj.execute-api.eu-central-1.amazonaws.com/dev/generated-ads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    console.log('Success:', url);
+    emit('data-loaded', url);
+    emit('status-change', 'finished');
+    // Handle the success case, e.g., play the audio or display the URL
+  } catch (error) {
+    console.error('Error:', error);
+    errorMessage.value = 'Failed to generate ad. Please try again.';
+    emit('status-change', 'form');
+  }
+}
+
 onMounted(() => {
   fetchCurrentlyPlaying();
 });
@@ -48,6 +123,8 @@ onMounted(() => {
   <div v-if="currentlyPlaying">
     <h2>Currently Playing</h2>
     <p>{{ currentlyPlaying.item.name }} by {{ currentlyPlaying.item.artists[0].name }}</p>
+    <v-btn color="primary" @click="submit">Generate Ad</v-btn>
+    <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
   </div>
   <div v-else>
     <p>No track is currently playing.</p>
