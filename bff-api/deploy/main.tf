@@ -1,21 +1,10 @@
-provider "aws" {
-  region = var.region
-}
-
-module "lambda" {
-  source            = "./modules/lambda"
-  function_name     = "generate_ads_lambda"
-  handler           = "lambda_function.lambda_handler"
-  runtime           = "python3.8"
-  lambda_source_dir = "../lambda"
-  tags = var.tags
-}
-
-module "api_gateway" {
-  source                = "./modules/api_gateway"
-  lambda_function_arn   = module.lambda.lambda_arn
-  lambda_function_name  = "generate_ads_lambda"
-  stage_name            = var.stage_name
-  region                = var.region
-  tags = var.tags
+module "ec2_instance" {
+  source              = "./modules/ec2-instance"
+  instance_name       = var.instance_name
+  instance_type       = var.instance_type
+  ami_id              = var.ami_id
+  vpc_id              = var.vpc_id
+  subnet_id           = var.subnet_id
+  allowed_cidr_blocks = var.allowed_cidr_blocks
+  flask_app_repo_url  = var.flask_app_repo_url
 }
