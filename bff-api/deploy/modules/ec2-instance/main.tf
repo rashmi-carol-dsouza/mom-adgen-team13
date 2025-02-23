@@ -120,7 +120,7 @@ resource "aws_instance" "this" {
               systemctl enable amazon-cloudwatch-agent
               systemctl start amazon-cloudwatch-agent
 
-              make run
+              make start
               EOF
 
   tags = {
