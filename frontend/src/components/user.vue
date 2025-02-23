@@ -15,12 +15,17 @@ if (!isLoggedIn()) {
 interface CurrentlyPlaying {
   item: {
     name: string;
-    artists: { name: string }[];
+    artists: { name: string; id: string }[];
   };
+}
+
+interface Artist {
+  genres: string[];
 }
 
 const currentlyPlaying = ref<CurrentlyPlaying | null>(null);
 const adFromAPI = ref<string | null>(null);
+const artistGenres = ref<string[]>([]);
 
 const fetchCurrentlyPlaying = async () => {
   const accessToken = localStorage.getItem('access_token');
@@ -38,8 +43,34 @@ const fetchCurrentlyPlaying = async () => {
 
   if (response.ok) {
     currentlyPlaying.value = await response.json();
+    if (currentlyPlaying.value && currentlyPlaying.value.item.artists.length > 0) {
+      const artistId = currentlyPlaying.value.item.artists[0].id;
+      await fetchArtistGenres(artistId);
+    }
   } else {
     console.error('Failed to fetch currently playing track:', response.statusText);
+  }
+}
+
+const fetchArtistGenres = async (artistId: string) => {
+  const accessToken = localStorage.getItem('access_token');
+  if (!accessToken) {
+    return;
+  }
+
+  const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    const artist: Artist = await response.json();
+    artistGenres.value = artist.genres;
+  } else {
+    console.error('Failed to fetch artist genres:', response.statusText);
   }
 }
 
@@ -82,12 +113,11 @@ const submit = async () => {
   emit('status-change', 'loading');
   try {
     const location = await getLocation();
-    console.log('Location:', location);
     const data = {
-      genre: ['rock'], // Example genre, you can modify this as needed
+      genre: artistGenres.value,
       lon: location.lon.toString(),
       lat: location.lat.toString(),
-      language: 'English', // Example language, you can modify this as needed
+      language: 'English',
     };
 
     const response = await fetch('https://4argznoorj.execute-api.eu-central-1.amazonaws.com/dev/generated-ads', {
@@ -128,11 +158,11 @@ onMounted(() => {
     <p>{{ currentlyPlaying.item.name }} by {{ currentlyPlaying.item.artists[0].name }}</p>
     <v-btn color="primary" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
-</div>
-<div v-else>
+    <player v-if="adFromAPI" :src="adFromAPI" />
+  </div>
+  <div v-else>
     <p>No track is currently playing.</p>
-</div>
-<player v-if="adFromAPI" :src="adFromAPI" />
+  </div>
 </template>
 
 <style scoped>
