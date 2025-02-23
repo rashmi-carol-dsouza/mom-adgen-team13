@@ -34,6 +34,9 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  /* vue sound */
+  --player-background: rgb(92, 0, 87);
 }
 
 @media (prefers-color-scheme: dark) {

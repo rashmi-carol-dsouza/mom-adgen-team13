@@ -57,4 +57,4 @@ deploy-destroy: ## Destory terraform infrastructure
 
 .PHONY: help deploy-init deploy-plan deploy-apply
 
-.PHONY: help install test lint start pre-commit-install pre-commit-run init-db
+.PHONY: help install test lint start pre-commit-install pre-commit-run init-db run
