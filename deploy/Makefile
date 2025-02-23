@@ -16,4 +16,7 @@ deployer-iam-plan: ## Plan terraform
 deployer-iam-apply: ## Apply terraform
 	cd ./deployer-iam && $(TERRAFORM) apply
 
+deployer-iam-destroy: ## Destroy terraform infrastructure
+	cd ./deployer-iam && $(TERRAFORM) destroy
+
 .PHONY: help deployer-iam-init deployer-iam-plan deployer-iam-apply
