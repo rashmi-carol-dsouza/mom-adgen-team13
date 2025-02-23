@@ -31,6 +31,9 @@ lint: ## Run linter
 start: ## Start the server
 	$(POETRY) run uvicorn bff_api.main:app --reload --port 5000
 
+run: ## Run the server on production
+	$(POETRY) run uvicorn bff_api.main:app --port 5000
+
 init-db: ## Initialize the database
 	$(POETRY) run python db/scripts/init_db/init.py
 
