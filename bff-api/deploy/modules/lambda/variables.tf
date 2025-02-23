@@ -17,3 +17,8 @@ variable "lambda_source_dir" {
   description = "Path to the Lambda function source directory"
   type        = string
 }
+
+variable "tags" {
+  description = "A map of tags to add to resources"
+  type        = map(string)
+}
