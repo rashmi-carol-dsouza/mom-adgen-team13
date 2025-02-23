@@ -97,7 +97,6 @@ resource "aws_instance" "this" {
               git clone ${var.flask_app_repo_url} mom-adgen-team13
               cd mom-adgen-team13/bff-api
               make setup
-              make start
 
               # CloudWatch Agent Configuration
               cat > /opt/aws/amazon-cloudwatch-agent/etc/cloudwatch-config.json <<EOL
@@ -120,6 +119,8 @@ resource "aws_instance" "this" {
 
               systemctl enable amazon-cloudwatch-agent
               systemctl start amazon-cloudwatch-agent
+
+              make run
               EOF
 
   tags = {
