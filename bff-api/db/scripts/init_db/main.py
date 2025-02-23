@@ -38,10 +38,20 @@ def main():
     db_password = os.getenv("DATABASE_PASSWORD")
     db_host = os.getenv("DATABASE_HOST", "localhost")
     migrations_path = os.getenv("MIGRATIONS_PATH")
-    init_data_path = os.getenv("INIT_DATA_PATH")
+    init_data_path = os.getenv("DATA_PATH")
     flag_init_db = os.getenv("FLAG_INIT_DB")
 
-    if not all([db_name, db_user, db_password, migrations_path, init_data_path]):
+    if not all(
+        [
+            db_name,
+            db_user,
+            db_password,
+            db_host,
+            migrations_path,
+            init_data_path,
+            flag_init_db,
+        ]
+    ):
         logger.error("Database credentials are not fully provided in the .env file")
         return
 
