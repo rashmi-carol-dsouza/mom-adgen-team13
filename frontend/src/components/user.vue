@@ -16,6 +16,9 @@ interface CurrentlyPlaying {
   item: {
     name: string;
     artists: { name: string; id: string }[];
+    album: {
+      images: { url: string }[];
+    };
   };
 }
 
@@ -153,9 +156,11 @@ onMounted(() => {
 
 <template>
   <div v-if="currentlyPlaying" class="container">
-    <p>currently playing</p>
+    <p>User is currently listening to</p>
+    <img :src="currentlyPlaying.item.album.images[0].url" alt="Album cover" class="album-cover" />
     <h2>{{ currentlyPlaying.item.name }}</h2>
     <p>by <b>{{ currentlyPlaying.item.artists[0].name }}</b></p>
+    <p>✅There are relevent events in the users area!</p>
     <v-btn color="pink" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
     <player v-if="adFromAPI" :src="adFromAPI" />
@@ -173,5 +178,12 @@ onMounted(() => {
   justify-content: start;
   gap: 1rem;
   margin-top: 10%;
+}
+
+.album-cover {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 </style>
