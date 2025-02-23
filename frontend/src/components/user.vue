@@ -156,6 +156,7 @@ onMounted(() => {
 
 <template>
   <div v-if="currentlyPlaying" class="container">
+    <h2>User location: Hamburg, Germany</h2>
     <p>User is currently listening to</p>
     <img :src="currentlyPlaying.item.album.images[0].url" alt="Album cover" class="album-cover" />
     <h2>{{ currentlyPlaying.item.name }}</h2>
@@ -163,7 +164,7 @@ onMounted(() => {
     <p>✅There are relevent events in the users area!</p>
     <v-btn class="btn" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
-    <player v-if="adFromAPI" :src="adFromAPI" />
+    <player v-if="adFromAPI"/>
   </div>
   <div v-else>
     <p>No track is currently playing.</p>
