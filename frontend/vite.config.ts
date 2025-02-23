@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import fs from 'fs';
 import path from 'path';
@@ -12,6 +13,14 @@ export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/assets',
+          dest: ''
+        }
+      ]
+    }),
     {
       name: 'generate-200-html',
       apply: 'build',

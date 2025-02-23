@@ -1,18 +1,18 @@
-<script lang="ts" setup>
-import { defineProps } from 'vue';
+<script lang="ts">
 import { VueSound } from 'vue-sound';
-
-const props = defineProps<{
-  src: string;
-}>();
+export default {
+  components: {
+    VueSound,
+  },
+};
 </script>
 
 <template>
-  <div>
-    <VueSound class="player"
-      show-download
-      title="Ad for your target audience"
-      :file="src"
+  <div class="player">
+    <VueSound
+    show-download	
+    title="Ad for your target audience"
+    file="src/assets/lumineers-hamburg.mp3"
     />
   </div>
 </template>
