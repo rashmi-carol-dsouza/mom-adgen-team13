@@ -1,19 +1,56 @@
-# Generated
-dist/
-data/
-
-# Observability
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 logs/
-logs/*
 prof/
 
-# Cache files
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+dist-ssr
+coverage
+*.local
+.vite
+
+# Local environment files
+*.local
+.env
+
+# Data
+data/
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.DS_Store
+*.todo
+*.tsbuildinfo
+
+# Python cache
 __pycache__/
 .mypy_cache/
 .pytest_cache/
 
-# OS, Editor
-*.todo
+# AWS SAM
+.aws-sam/
 
-# Secret
-.env
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
