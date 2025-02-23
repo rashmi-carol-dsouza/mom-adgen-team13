@@ -13,6 +13,7 @@ resource "aws_iam_role" "deploy_role" {
       }
     ]
   })
+  tags = var.tags
 }
 
 resource "aws_iam_policy" "deploy_policy" {
@@ -33,6 +34,7 @@ resource "aws_iam_policy" "deploy_policy" {
       }
     ]
   })
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "deploy_policy_attach" {
