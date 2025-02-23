@@ -1,19 +1,57 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import userInput from './components/userInput.vue';
-import player from './components/player.vue';
 
-const status = ref('form');
-let adFromAPI = ref();
+const clientId = '8debbbb07e454253bc3da61a7411a163';
+const redirectUri = 'https://team13.surge.sh/callback';
+const scope = 'user-read-private user-read-email';
+let authUrl: string = '';
 
-const handleStatusChange = (newStatus: string) => {
-  status.value = newStatus;
-};
+const generateRandomString = (length: number): string => {
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const values = crypto.getRandomValues(new Uint8Array(length));
+  return values.reduce((acc, x) => acc + possible[x % possible.length], "");
+}
 
-const handleDataLoaded = (fileUrl: URL) => {
-  adFromAPI.value = fileUrl;
-  status.value = 'finished';
-};
+const codeVerifier = generateRandomString(64);
+
+const sha256 = async (plain: string): Promise<ArrayBuffer> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(plain);
+  return window.crypto.subtle.digest('SHA-256', data);
+}
+
+const base64encode = (input: ArrayBuffer): string => {
+  return btoa(String.fromCharCode(...new Uint8Array(input)))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+
+const setupAuthUrl = async () => {
+  const hashed = await sha256(codeVerifier);
+  const codeChallenge = base64encode(hashed);
+
+  window.localStorage.setItem('code_verifier', codeVerifier);
+
+  const params = {
+    response_type: 'code',
+    client_id: clientId,
+    scope,
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
+    redirect_uri: redirectUri,
+  }
+
+  const url = new URL("https://accounts.spotify.com/authorize");
+  url.search = new URLSearchParams(params).toString();
+  authUrl = url.toString();
+}
+
+setupAuthUrl();
+
+const login = () => {
+  window.location.href = authUrl;
+}
 </script>
 
 <template>
@@ -21,9 +59,8 @@ const handleDataLoaded = (fileUrl: URL) => {
     <h1>MoM Team 13</h1>
   </header>
   <main class="main">
-    <userInput @status-change="handleStatusChange" @data-loaded="handleDataLoaded" />
-    <v-progress-circular v-if="status === 'loading'" indeterminate color="primary"></v-progress-circular>
-    <player v-if="status === 'finished'" />
+    <v-btn @click="login">Login with Spotify</v-btn>
+    <router-view />
   </main>
   <footer>
     <p>Hacked with 💖 by Team 13 at Measure of Music 2025</p>
