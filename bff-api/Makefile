@@ -3,6 +3,7 @@ POETRY := poetry
 PRE_COMMIT := pre-commit
 PYTHON := python3
 DIR := bff_api
+TERRAFORM := terraform
 
 # Generic dynamic help
 help:
@@ -38,5 +39,16 @@ pre-commit-install: ## Install pre-commit hooks
 
 pre-commit-run: ## Run pre-commit hooks
 	$(PRE_COMMIT) run --all-files
+
+deploy-init: ## Initialize terraform
+	cd ./deploy && $(TERRAFORM) init
+
+deploy-plan: ## Plan terraform
+	cd ./deploy && $(TERRAFORM) plan
+
+deploy-apply: ## Apply terraform
+	cd ./deploy && $(TERRAFORM) apply
+
+.PHONY: help deploy-init deploy-plan deploy-apply
 
 .PHONY: help install test lint start pre-commit-install pre-commit-run init-db
