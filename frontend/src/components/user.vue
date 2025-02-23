@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import player from './player.vue';
 
 const emit = defineEmits(['status-change', 'data-loaded']);
 
@@ -19,6 +20,7 @@ interface CurrentlyPlaying {
 }
 
 const currentlyPlaying = ref<CurrentlyPlaying | null>(null);
+const adFromAPI = ref<string | null>(null);
 
 const fetchCurrentlyPlaying = async () => {
   const accessToken = localStorage.getItem('access_token');
@@ -104,6 +106,7 @@ const submit = async () => {
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     console.log('Success:', url);
+    adFromAPI.value = url;
     emit('data-loaded', url);
     emit('status-change', 'finished');
     // Handle the success case, e.g., play the audio or display the URL
@@ -125,10 +128,11 @@ onMounted(() => {
     <p>{{ currentlyPlaying.item.name }} by {{ currentlyPlaying.item.artists[0].name }}</p>
     <v-btn color="primary" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
-  </div>
-  <div v-else>
+</div>
+<div v-else>
     <p>No track is currently playing.</p>
-  </div>
+</div>
+<player v-if="adFromAPI" :src="adFromAPI" />
 </template>
 
 <style scoped>
