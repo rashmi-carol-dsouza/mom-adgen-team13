@@ -26,7 +26,8 @@ resource "aws_iam_policy" "deploy_policy" {
         Action   = [
           "lambda:*",
           "s3:*",
-          "iam:PassRole"
+          "iam:PassRole",
+           "ssm:*"
         ]
         Resource = "*"
       }
