@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from pydub import AudioSegment
 
 load_dotenv()
 
@@ -45,7 +46,7 @@ Event Details:
 - **Engaging Hook:** Start with an attention-grabbing line that excites the listener.
 - **Smooth & Natural Flow:** Use conversational language that sounds like a real radio commercial.
 - **Avoid Year Mentions:** The year is not needed unless absolutely necessary.
-- **Strong Call to Action:** Encourage the listener to act now in a persuasive yet natural way.
+- **Strong Call to Action:** Encourage the listener to act now in a persuasive yet natural way. But there is no screen interactions.
 - **No Redundant Phrases:** Keep it crisp and under fifty words.
 
 Make the advertisement feel **energetic, smooth, and designed for spoken delivery** without awkward phrasing. 
@@ -53,26 +54,63 @@ Make the advertisement feel **energetic, smooth, and designed for spoken deliver
 )
 
 class LMNTtts:
-    """Handles text-to-speech conversion using LMNT API."""
+    """Handles text-to-speech conversion and adds background music."""
 
-    def __init__(self, api_key: str, model: str = "blizzard", voice_id: str = "lily"):
+    def __init__(self, api_key: str, model: str = "aurora", voice_id: str = "lily", bg_music_path: str = None):
         self.api_key = api_key
         self.voice_id = voice_id
         self.model = model
+        self.bg_music_path = bg_music_path
+        self.output_file = os.path.join(data_dir, "final_advert.mp3")
 
     async def synthesize(self, text: str) -> str:
         """Convert text to speech and save as an MP3 file."""
         async with Speech(self.api_key) as speech:
             synthesis = await speech.synthesize(text, self.voice_id, model=self.model)
+
+        tts_audio_path = os.path.join(data_dir, "tts_output.mp3")
         
-        with open(output_audio_path, "wb") as f:
+        with open(tts_audio_path, "wb") as f:
             f.write(synthesis["audio"])
 
-        logger.success(f"Audio response saved to {output_audio_path}")
-        return output_audio_path
+        logger.success(f"TTS Audio saved to {tts_audio_path}")
+
+        # If background music is provided, mix it with the TTS audio
+        if self.bg_music_path:
+            return self.mix_audio(tts_audio_path)
+        else:
+            return tts_audio_path
+
+    def mix_audio(self, tts_audio_path: str) -> str:
+        """Mix TTS audio with background music."""
+        try:
+            voice = AudioSegment.from_file(tts_audio_path)
+            background = AudioSegment.from_file(self.bg_music_path).set_frame_rate(voice.frame_rate)
+
+            # Lower background music volume
+            background = background - 10  # Reduce volume by 20 dB
+            voice = voice + 1
+
+            # Match lengths
+            if len(background) < len(voice):
+                background = background * (len(voice) // len(background) + 1)
+
+            background = background[: len(voice)]  # Trim to fit voice length
+
+            # Mix audio
+            final_audio = voice.overlay(background)
+
+            # Save final audio
+            final_audio.export(self.output_file, format="mp3")
+            logger.success(f"Final Advert saved to {self.output_file}")
+
+            return self.output_file
+        except Exception as e:
+            logger.error(f"Error mixing audio: {e}")
+            return tts_audio_path  # Return the voice-only file if mixing fails
 
 async def generate_event_advert(event_data: dict):
-    """Generate an advertisement from event data using the prompt correctly."""
+    """Generate an advertisement and add background music."""
     
     formatted_prompt = prompt.format(
         artist_name=event_data["artist_name"],
@@ -82,18 +120,21 @@ async def generate_event_advert(event_data: dict):
         country=event_data["country"],
         event_start_date=event_data["event_start_date"],
         event_start_time=event_data["event_start_time"],
-        genres=", ".join(event_data["genres"]),
-        average_ticket_price=event_data["average_ticket_price"]
+        genres=", ".join(event_data["genres"])
     )
-    
-    try:
-        response = model.invoke(formatted_prompt)  # ✅ Correctly use the prompt
-        advert_text = response.content  # ✅ Get the generated text
-        logger.info(f"Generated advert: {advert_text}")
 
-        # Convert text to speech
-        tts = LMNTtts(api_key=lmnt_api_key)
+    try:
+        response = model.invoke(formatted_prompt)  
+        advert_text = response.content.strip()
+        logger.info(f"Generated Advert Text: {advert_text}")
+
+        # Background music file (replace with your actual music file path)
+        bg_music_path = os.path.join(data_dir, "background_music.mp3")
+
+        # Convert text to speech and add background music
+        tts = LMNTtts(api_key=lmnt_api_key, bg_music_path=bg_music_path)
         mp3_file_path = await tts.synthesize(advert_text)
+
         return mp3_file_path
     except Exception as e:
         logger.error(f"Error generating advert: {e}")
