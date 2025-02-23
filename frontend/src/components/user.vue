@@ -161,7 +161,7 @@ onMounted(() => {
     <h2>{{ currentlyPlaying.item.name }}</h2>
     <p>by <b>{{ currentlyPlaying.item.artists[0].name }}</b></p>
     <p>✅There are relevent events in the users area!</p>
-    <v-btn color="pink" @click="submit">Generate Ad</v-btn>
+    <v-btn class="btn" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
     <player v-if="adFromAPI" :src="adFromAPI" />
   </div>
@@ -178,6 +178,14 @@ onMounted(() => {
   justify-content: start;
   gap: 1rem;
   margin-top: 10%;
+
+  .btn {
+    background: linear-gradient(90deg, rgb(163, 0, 76) 0%, rgba(212, 0, 88, 0.849) 55%, rgba(199, 0, 93, 0.993) 100%);
+    color: white;
+    border: solid 2px hotpink;
+    height: 50px;
+    width: 180px;
+}
 }
 
 .album-cover {

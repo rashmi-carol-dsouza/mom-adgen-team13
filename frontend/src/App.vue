@@ -4,7 +4,7 @@
 <template>
   <div class="container">
     <header>
-      <h1><b>Spotlight</b></h1>
+      <h1 class="title"><b>Spotlight</b></h1>
     </header>
     <main>
       <router-view />
@@ -23,6 +23,13 @@
 }
 
 header {
+
+  .title {
+    font-size: 3rem;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
   text-align: center;
   padding: 1rem;
   margin-top: 10%;
