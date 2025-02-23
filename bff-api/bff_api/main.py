@@ -1,11 +1,11 @@
 import base64
+import json
+from os import path
 
 import psycopg
+import requests
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from os import path
-import requests
-import json
 from loguru import logger
 from query import event_by_genre_by_location_query
 
@@ -17,6 +17,7 @@ db_host = "ep-aged-forest-a2sd5mrk.eu-central-1.pg.koyeb.app"
 app = Flask(__name__)
 
 dummy_mp3_path = path.join(path.dirname(__file__), "example-advert.mp3")
+
 
 def fetch_audio_advert(event_data):
     tts_api_url = ""
@@ -50,7 +51,9 @@ def generated_ads():
 
         # Call the TTS API to generate an audio file
         # return audio file
-        logger.info(f"Successfully connected to the database: result count: {len(result)}")
+        logger.info(
+            f"Successfully connected to the database: result count: {len(result)}"
+        )
 
         cur.close()
         conn.close()
@@ -62,19 +65,11 @@ def generated_ads():
         mp3_data = f.read()
         encoded_data = base64.b64encode(mp3_data).decode("utf-8")
 
-    return jsonify(
-        {
-            "statusCode": 200,
-            "headers": {
-                "Content-Type": "audio/mpeg",
-                "Access-Control-Allow-Origin": "*",  # Allows all domains
-                "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
-                "Access-Control-Allow-Headers": "Content-Type",
-            },
-            "isBase64Encoded": True,
-            "body": encoded_data,
-        }
-    )
+    response = jsonify({"audio_data": encoded_data})
+    response.headers["Content-Type"] = "application/json"
+    response.headers["Content-Disposition"] = "attachment; filename=advert.mp3"
+    return response
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

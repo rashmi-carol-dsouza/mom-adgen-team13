@@ -16,25 +16,22 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "key_name" {
-  description = "Name of the EC2 key pair for SSH access"
-  type        = string
-}
-
 variable "ami_id" {
   description = "AMI ID to use for the EC2 instance (default is Amazon Linux 2)"
   type        = string
-  default     = "ami-0c94855ba95c71c99"
+  default     = "ami-06ee6255945a96aba"
 }
 
 variable "vpc_id" {
   description = "VPC ID where the instance will be launched"
   type        = string
+  default = "vpc-c02e81aa"
 }
 
 variable "subnet_id" {
   description = "Subnet ID within the VPC to launch the instance"
   type        = string
+  default = "subnet-23e77149"
 }
 
 variable "allowed_cidr_blocks" {
