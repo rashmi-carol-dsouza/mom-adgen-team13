@@ -28,7 +28,9 @@ output_audio_path = os.path.join(data_dir, "advert.mp3")
 
 # Initialize LLM Model
 model = ChatMistralAI(mistral_api_key=mistral_api_key)
+import random
 
+random_number = random.randint(30, 50)
 # Chat prompt template
 prompt = ChatPromptTemplate.from_template(
     """
@@ -44,12 +46,13 @@ Event Details:
 
 ### **Guidelines for the Advertisement:**
 - **Engaging Hook:** Start with an attention-grabbing line that excites the listener.
+- **Did You Know Fact:** Mention that {random_number} people are already thinking about this event right now!
 - **Smooth & Natural Flow:** Use conversational language that sounds like a real radio commercial.
 - **Avoid Year Mentions:** The year is not needed unless absolutely necessary.
-- **Strong Call to Action:** Encourage the listener to act now in a persuasive yet natural way. But there is no screen interactions.
+- **Strong Call to Action:** Persuade the listener to act now with a closing line like "Swipe up to book your tickets!"
 - **No Redundant Phrases:** Keep it crisp and under fifty words.
 
-Make the advertisement feel **energetic, smooth, and designed for spoken delivery** without awkward phrasing. 
+Make the advertisement feel **energetic, smooth, and designed for spoken delivery** without awkward phrasing.  
 """
 )
 
@@ -120,7 +123,8 @@ async def generate_event_advert(event_data: dict):
         country=event_data["country"],
         event_start_date=event_data["event_start_date"],
         event_start_time=event_data["event_start_time"],
-        genres=", ".join(event_data["genres"])
+        genres=", ".join(event_data["genres"]),
+        random_number=random_number
     )
 
     try:
