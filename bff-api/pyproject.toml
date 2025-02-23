@@ -16,7 +16,7 @@ psycopg = "^3.2.4"
 
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^3.2.6"
+pylint = "^3.3.4"
 
 [build-system]
 requires = ["poetry-core"]

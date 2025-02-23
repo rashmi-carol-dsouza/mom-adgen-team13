@@ -3,6 +3,7 @@ import csv
 
 def read_raw_data(file_path):
     csv_data = None
+    print(file_path)
     with open(file_path, "r", encoding="utf-8") as file:
         csv_data = file.read()
     return csv_data
@@ -24,7 +25,14 @@ def insert_data(connection, csv_text, logger):
             venue_name = row["Venue Name"].strip()
             venue_address = row["Venue address "].strip()
             venue_zip = row["Venue ZIP Code"].strip()
-            venue_lat = float(row["Venue Latitude"].strip())
+            try:
+
+                venue_lat = float(row["Venue Latitude"].strip())
+            except ValueError:
+                logger.error(
+                    f"Failed to parse latitude for venue {venue_id}, artist: {artist_id}, event: {event_id}"
+                )
+                continue
             venue_long = float(row["Venue Longitude"].strip())
             city = row["City"].strip()
             country = row["Country"].strip()

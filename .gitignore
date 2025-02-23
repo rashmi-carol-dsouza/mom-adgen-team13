@@ -56,3 +56,6 @@ __pycache__/
 terraform.tfstate
 terraform.tfstate.backup
 .terraform.tfstate.lock.info
+
+# AWS
+bff-api/lambda/package
