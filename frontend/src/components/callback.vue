@@ -14,7 +14,8 @@ const getToken = async (code: string) => {
       client_id: '8debbbb07e454253bc3da61a7411a163',
       grant_type: 'authorization_code',
       code,
-      redirect_uri: 'https://team13.surge.sh/callback',
+      // redirect_uri: 'https://team13.surge.sh/callback',
+      redirect_uri: 'http://localhost:5173/callback',
       code_verifier: codeVerifier || '',
     }).toString(),
   }

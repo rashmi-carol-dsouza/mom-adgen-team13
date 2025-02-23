@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 const clientId = '8debbbb07e454253bc3da61a7411a163';
+// const redirectUri = 'https://team13.surge.sh/callback';
 const redirectUri = 'http://localhost:5173/callback';
 const scope = 'user-read-private user-read-email user-read-playback-state user-read-currently-playing';
 let authUrl: string = '';
