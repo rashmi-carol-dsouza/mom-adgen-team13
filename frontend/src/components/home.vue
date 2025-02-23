@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import userInput from './userInput.vue';
 import player from './player.vue';
+import Login from './login.vue';
 
 const status = ref('form');
 let adFromAPI = ref();
@@ -17,6 +18,7 @@ const handleDataLoaded = (fileUrl) => {
 </script>
 
 <template>
+    <Login />
     <userInput @status-change="handleStatusChange" @data-loaded="handleDataLoaded" />
     <v-progress-circular v-if="status === 'loading'" indeterminate color="primary"></v-progress-circular>
     <player v-if="status === 'finished'" />
