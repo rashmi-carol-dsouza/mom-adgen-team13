@@ -120,7 +120,7 @@ const submit = async () => {
       language: 'English',
     };
 
-    const response = await fetch('https://4argznoorj.execute-api.eu-central-1.amazonaws.com/dev/generated-ads', {
+    const response = await fetch('https://wdueh6plo9.execute-api.eu-central-1.amazonaws.com/dev/generated-ads', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -139,7 +139,6 @@ const submit = async () => {
     adFromAPI.value = url;
     emit('data-loaded', url);
     emit('status-change', 'finished');
-    // Handle the success case, e.g., play the audio or display the URL
   } catch (error) {
     console.error('Error:', error);
     errorMessage.value = 'Failed to generate ad. Please try again.';
@@ -153,10 +152,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="currentlyPlaying">
-    <h2>Currently Playing</h2>
-    <p>{{ currentlyPlaying.item.name }} by {{ currentlyPlaying.item.artists[0].name }}</p>
-    <v-btn color="primary" @click="submit">Generate Ad</v-btn>
+  <div v-if="currentlyPlaying" class="container">
+    <p>currently playing</p>
+    <h2>{{ currentlyPlaying.item.name }}</h2>
+    <p>by <b>{{ currentlyPlaying.item.artists[0].name }}</b></p>
+    <v-btn color="pink" @click="submit">Generate Ad</v-btn>
     <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
     <player v-if="adFromAPI" :src="adFromAPI" />
   </div>
@@ -166,4 +166,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+  margin-top: 10%;
+}
 </style>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
 const clientId = '8debbbb07e454253bc3da61a7411a163';
 const redirectUri = 'http://localhost:5173/callback';
