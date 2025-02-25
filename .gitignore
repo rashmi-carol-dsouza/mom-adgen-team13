@@ -33,6 +33,7 @@ data/
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate
+terraform.tfstate.backup
 
 # Observability
 logs/
@@ -52,3 +53,8 @@ __pycache__/
 
 # Secret
 .env
+
+#AWS LAMBDA
+lambda_function.zip
+lambda_layer.zip
+package/
