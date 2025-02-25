@@ -1,0 +1,9 @@
+boto3
+pydub==0.25.1
+lmnt==1.1.7
+langchain==0.3.19
+langchain-core==0.3.37
+langchain-community==0.3.18
+langchain-mistralai==0.2.7
+mistralai==1.5.0
+ffmpeg

@@ -43,12 +43,26 @@ data/
 *.tsbuildinfo
 
 # Python cache
-__pycache__/
+pycache__/
 .mypy_cache/
 .pytest_cache/
 
 # AWS SAM
 .aws-sam/
+
+#AWS LAMBDA
+lambda_function.zip
+lambda_layer.zip
+package/
+bff-api/lambda/package
+
+# Observability
+logs/
+logs/*
+prof/
+
+# Secret
+.env
 
 # Terraform
 .terraform/
@@ -56,6 +70,4 @@ __pycache__/
 terraform.tfstate
 terraform.tfstate.backup
 .terraform.tfstate.lock.info
-
-# AWS
-bff-api/lambda/package
+terraform.tfstate.backup
