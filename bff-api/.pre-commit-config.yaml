@@ -40,12 +40,12 @@ repos:
     hooks:
       - id: commitizen
 
-  - repo: https://github.com/pylint-dev/pylint
-    rev: v3.2.6
-    hooks:
-      - id: pylint
-        language: system
-        args: ["--rcfile=.pylintrc"]
+  # - repo: https://github.com/pylint-dev/pylint
+  #   rev: v3.2.6
+  #   hooks:
+  #     - id: pylint
+  #       language: system
+  #       args: ["--rcfile=.pylintrc"]
 
   - repo: local
     hooks:

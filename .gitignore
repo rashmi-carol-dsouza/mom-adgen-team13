@@ -4,14 +4,28 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+logs/
+prof/
 
+# Dependencies
 node_modules
-.DS_Store
+
+# Build outputs
 dist
 dist-ssr
 coverage
 *.local
+.vite
+*.zip
 
+# Local environment files
+*.local
+.env
+
+# Data
+data/
+
+# Cypress
 /cypress/videos/
 /cypress/screenshots/
 
@@ -24,37 +38,36 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-
+*.DS_Store
+*.todo
 *.tsbuildinfo
 
-dist/
-data/
+# Python cache
+pycache__/
+.mypy_cache/
+.pytest_cache/
+
+# AWS SAM
 .aws-sam/
-.terraform/
-.terraform.lock.hcl
-terraform.tfstate
-terraform.tfstate.backup
+
+#AWS LAMBDA
+lambda_function.zip
+lambda_layer.zip
+package/
+bff-api/lambda/package
 
 # Observability
 logs/
 logs/*
 prof/
 
-# Cache files
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-
-# OS, Editor
-*.todo
-.vscode/
-.idea/
-*.DS_Store
-
 # Secret
 .env
 
-#AWS LAMBDA
-lambda_function.zip
-lambda_layer.zip
-package/
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
+terraform.tfstate.backup

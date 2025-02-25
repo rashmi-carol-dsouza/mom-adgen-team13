@@ -18,3 +18,12 @@ variable "allowed_principals" {
     "arn:aws:iam::477896369815:user/chatapi"
   ]
 }
+
+variable "tags" {
+  description = "A map of tags to add to resources"
+  type        = map(string)
+  default     = {
+    Project       = "mom-2025"
+    Component     = "deployer-iam"
+  }
+}

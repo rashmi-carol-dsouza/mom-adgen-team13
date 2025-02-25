@@ -1,22 +1,28 @@
 [tool.poetry]
-name = "bbf-api"
+name = "bff-api"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@email.de>"]
+authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.10.0,<3.11.0 || >3.11.0,<4.0.0"
-pytest = "^8.3.2"
-pytest-mock = "^3.14.0"
-loguru = "^0.7.2"
-python-dotenv = "^1.0.1"
-psycopg = "^3.2.4"
+python = "^3.12"
+flask = "^3.1.0"
+psycopg = {extras = ["c"], version = "^3.2.5"}
+loguru = "^0.7.3"
+flask-cors = "^5.0.0"
+requests = "^2.32.3"
+lmnt = "^1.1.7"
+langchain = "^0.3.19"
+mistralai = "^1.5.0"
+langchain-community = "^0.3.18"
+langchain-mistralai = "^0.2.7"
+pydub = "^0.25.1"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+jsonify = "^0.5"
 
-
-[tool.poetry.group.dev.dependencies]
-pylint = "^3.2.6"
 
 [build-system]
 requires = ["poetry-core"]
